@@ -1,0 +1,25 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nori – Choose Your Companion</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1> Nori</h1>
+        <p>Who do you want to talk to today?</p>
+    </header>
+
+    <main class="voice-selection">
+        <div class="voice-grid">
+            <a href="/chat?voice=el" class="voice-card">El</a>
+            <a href="/chat?voice=caring_mom" class="voice-card">Caring Mom</a>
+            <a href="/chat?voice=calm_dad" class="voice-card">Calm Dad</a>
+            <a href="/chat?voice=loving_grandma" class="voice-card">Loving Grandma</a>
+            <a href="/chat?voice=wise_grandpa" class="voice-card">Wise Grandpa</a>
+            <a href="/chat?voice=funny_friend" class="voice-card">Funny Friend</a>
+        </div>
+    </main>
+</body>
+</html>

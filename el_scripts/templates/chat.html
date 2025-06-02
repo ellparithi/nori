@@ -1,0 +1,108 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nori</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: sans-serif;
+            max-width: 700px;
+            margin: auto;
+            padding: 1em;
+        }
+        .chat {
+            margin-bottom: 1em;
+            padding: 0.5em;
+            border-radius: 10px;
+            max-width: 80%;
+        }
+        .parent {
+            background-color: #f0f0f0;
+            text-align: left;
+        }
+        .el {
+            background-color: #dff0ff;
+            text-align: right;
+            margin-left: auto;
+        }
+        audio {
+            margin-top: 0.5em;
+        }
+    </style>
+</head>
+<body>
+    <p><a href="/" style="text-decoration: none; color: #4a90e2;">← Talk to a different companion</a></p>
+    <h2> Nori</h2>
+
+    <div class="mic-wrapper">
+        <button id="mic-button" onclick="toggleRecording()">🎙️</button>
+    </div>
+
+    <hr>
+
+    <main id="chat-box">
+        {% if conversation and conversation[-1].speaker == "El" and conversation[-1].audio %}
+            <div class="ripple-container">
+                <div class="ripple-circle"></div>
+                <audio autoplay style="display: none;">
+                    <source src="{{ conversation[-1].audio }}" type="audio/mpeg">
+                </audio>
+            </div>
+        {% endif %}
+    </main>
+
+<script>
+let isRecording = false;
+let mediaRecorder;
+let audioChunks = [];
+
+async function toggleRecording() {
+    if (!isRecording) {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaRecorder = new MediaRecorder(stream);
+        audioChunks = [];
+        mediaRecorder.start();
+
+        mediaRecorder.ondataavailable = event => {
+            audioChunks.push(event.data);
+        };
+
+        isRecording = true;
+        document.getElementById("mic-button").innerText = "❌";
+        document.getElementById("mic-button").classList.add("recording");
+
+
+    } else {
+        mediaRecorder.stop();
+        mediaRecorder.onstop = async () => {
+            const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+            const formData = new FormData();
+            formData.append("audiofile", audioBlob, "recorded.wav");
+
+            const currentVoice = new URLSearchParams(window.location.search).get("voice") || "el";
+            formData.append("voice", currentVoice);
+
+            const response = await fetch("/chat", {
+                method: "POST",
+                body: formData
+            });
+
+            const html = await response.text();
+            document.open();
+            document.write(html);
+            document.close();
+        };
+
+        isRecording = false;
+        document.getElementById("mic-button").innerText = "🎙️";
+        document.getElementById("mic-button").classList.remove("recording");
+
+    }
+}
+</script>
+
+</body>
+</html>
+
