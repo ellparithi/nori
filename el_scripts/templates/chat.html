@@ -3,29 +3,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link href="https://fonts.googleapis.com/css2?family=Koho:wght@500;600;700&display=swap" rel="stylesheet">
     <title>Nori</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <style>
-        body {
-            font-family: sans-serif;
-            max-width: 700px;
-            margin: auto;
-            padding: 1em;
-        }
         .chat {
             margin-bottom: 1em;
             padding: 0.5em;
             border-radius: 10px;
             max-width: 80%;
-        }
-        .parent {
-            background-color: #f0f0f0;
-            text-align: left;
-        }
-        .el {
-            background-color: #dff0ff;
-            text-align: right;
-            margin-left: auto;
         }
         audio {
             margin-top: 0.5em;
@@ -33,25 +19,48 @@
     </style>
 </head>
 <body>
-    <p><a href="/" style="text-decoration: none; color: #4a90e2;">← Talk to a different companion</a></p>
-    <h2> Nori</h2>
+    
+    <header style="display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 2rem 1rem 2rem;">
+  
+        <!-- Left: Logo + Nori -->
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <img src="{{ url_for('static', filename='nori2.svg') }}" alt="Nori Logo" style="height: 36px;" />
+            <h1 style="font-family: 'Koho', sans-serif; font-size: 1.2rem; margin: 0;">Nori</h1>
+        </div>
 
-    <div class="mic-wrapper">
-        <button id="mic-button" onclick="toggleRecording()">🎙️</button>
-    </div>
+        <!-- Right: Double back arrow -->
+        <a href="/" class="back-button" aria-label="Back to voice selection">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
+            <path d="M18 6L12 12L18 18M12 6L6 12L12 18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </a>
+    </header>
 
-    <hr>
+    <div class="center-wrap">
+        <button id="mic-button" onclick="toggleRecording()">
+            <span class="icon mic-icon">
+                <!-- Mic SVG -->
+                <svg width="24" height="24" fill="black" viewBox="0 0 24 24">
+                    <path d="M12 1a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V4a3 3 0 0 1 3-3zm5 9a5 5 0 0 1-10 0H5a7 7 0 0 0 14 0h-2zm-5 12a7 7 0 0 0 7-7h-2a5 5 0 0 1-10 0H5a7 7 0 0 0 7 7z"/>
+                </svg>
+            </span>
+            <span class="icon x-icon" style="display: none;">
+                <!-- X SVG -->
+                <svg width="24" height="24" fill="black" viewBox="0 0 24 24">
+                    <path d="M18 6L6 18M6 6l12 12" stroke="black" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </span>
+        </button>
 
-    <main id="chat-box">
         {% if conversation and conversation[-1].speaker == "El" and conversation[-1].audio %}
             <div class="ripple-container">
-                <div class="ripple-circle"></div>
-                <audio autoplay style="display: none;">
-                    <source src="{{ conversation[-1].audio }}" type="audio/mpeg">
-                </audio>
+            <div class="ripple-circle"></div>
+            <audio autoplay style="display: none;">
+                <source src="{{ conversation[-1].audio }}" type="audio/mpeg">
+            </audio>
             </div>
         {% endif %}
-    </main>
+    </div>
 
 <script>
 let isRecording = false;
@@ -70,7 +79,8 @@ async function toggleRecording() {
         };
 
         isRecording = true;
-        document.getElementById("mic-button").innerText = "❌";
+        document.querySelector(".mic-icon").style.display = "none";
+        document.querySelector(".x-icon").style.display = "inline";
         document.getElementById("mic-button").classList.add("recording");
 
 
@@ -96,7 +106,8 @@ async function toggleRecording() {
         };
 
         isRecording = false;
-        document.getElementById("mic-button").innerText = "🎙️";
+        document.querySelector(".mic-icon").style.display = "inline";
+        document.querySelector(".x-icon").style.display = "none";
         document.getElementById("mic-button").classList.remove("recording");
 
     }

@@ -3,7 +3,9 @@
 
 body {
     font-family: 'Segoe UI', sans-serif;
-    background-color: #f4f6fa;
+    background: radial-gradient(circle at center, #111111 0%, #0a0a0a 100%);
+    background-color: #0B0B0B;
+    color: #FFFFFF;
     margin: 0;
     padding: 0;
     display: flex;
@@ -11,11 +13,16 @@ body {
     height: 100vh;
 }
 
+h1, h2, h3, p, a, button {
+    color: #FFFFFF;
+}
+
 header {
-    background-color: #4a90e2;
+    background-color: transparent;
     color: white;
-    padding: 1rem;
-    text-align: center;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
 }
 
 main {
@@ -110,7 +117,7 @@ audio {
     width: 24px;
     height: 24px;
     border-radius: 50%;
-    background-color: #4a90e2;
+    background-color: white;
     animation: ripple 1.5s infinite ease-in-out;
 }
 
@@ -138,8 +145,8 @@ audio {
     height: 80px;
     border-radius: 50%;
     border: none;
-    background-color: #4a90e2;
-    color: white;
+    background-color: white;
+    color: black;
     font-size: 2rem;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     cursor: pointer;
@@ -147,7 +154,7 @@ audio {
 }
 
 #mic-button.recording {
-    background-color: #357ac9;
+    background-color: white;
     animation: pulse 1.5s infinite ease-in-out;
 }
 
@@ -167,7 +174,8 @@ audio {
 }
 
 .voice-card {
-    background-color: #4a90e2;
+    background-color: transparent;
+    border: 1px solid #ffffff;
     color: white;
     text-align: center;
     text-decoration: none;
@@ -177,8 +185,96 @@ audio {
     font-weight: 500;
     transition: transform 0.2s ease, background-color 0.2s ease;
 }
-
 .voice-card:hover {
-    background-color: #357ac9;
+    background-color: rgba(255,255,255,0.05);
     transform: translateY(-4px);
+}
+
+.voice-selection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    min-height: 100vh;
+}
+
+.ripple-circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: white;
+    animation: ripple 1.5s infinite ease-in-out;
+}
+
+.center-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  min-height: 80vh;
+}
+
+.ripple-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  margin-top: 1rem;
+}
+
+.ripple-circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: white;
+  animation: ripple 1.5s infinite ease-in-out;
+}
+
+.icon {
+  transition: opacity 0.3s ease;
+}
+
+.back-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.back-button:hover {
+  transform: translateX(-4px);
+}
+
+.voice-card {
+  transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background-color: transparent;
+}
+.voice-card:hover {
+  transform: translateY(-2px);
+  background-color: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+#mic-button.recording {
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1); }
+  50% { box-shadow: 0 0 0 12px rgba(255, 255, 255, 0.05); }
+  100% { box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1); }
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url('/static/noise.svg'), radial-gradient(circle, #111 0%, #000 100%);
+  opacity: 0.04;
+  z-index: 0;
+  pointer-events: none;
 }

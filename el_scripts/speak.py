@@ -10,7 +10,7 @@ API_KEY = os.getenv("ELEVENLABS_API_KEY")
 os.makedirs("static", exist_ok=True)
 
 VOICES = {
-    "el": "gN6sL3bp2Aj0XdA4ygXI",
+    "el": "iyjNciGCooG4sIxA3Euj",
     "funny_friend": "9d9EpBpx0pYv3ITz6Bqq",
     "calm_dad": "yLpsmn1Po3RkZ9tSUxjv",
     "wise_grandpa": "0lp4RIz96WD1RUtvEu3Q",
