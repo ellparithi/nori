@@ -33,7 +33,7 @@
 
 1. Clone the repo:
     ```bash
-    git clone https://github.com/yourusername/nori.git
+    git clone https://github.com/ellparithi/nori.git
     cd nori
     ```
 
